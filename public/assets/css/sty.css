@@ -1,0 +1,26 @@
+/* style.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+section.bg-primary {
+  background: #007bff; /* Bootstrap primary default or adjust as your brand color */
+}
+
+section#services .card {
+  transition: transform .2s ease;
+}
+
+section#services .card:hover {
+  transform: translateY(-8px);
+}
+
+footer {
+  font-size: 0.9rem;
+}
