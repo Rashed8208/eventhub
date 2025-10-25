@@ -7,29 +7,19 @@ const routes =  [
     name: "home",
     component: () => import("./components/Home")
   },
-//   {
-//     path: "/dashboard",
-//     alias: "/dashboard",
-//     name: "dashboard",
-//     component: () => import("./components/Dashboard")
-//   },
-//   {
-//     path: "/unit_list",
-//     alias: "/unit_list",
-//     name: "unit_list",
-//     component: () => import("./components/Unit/UnitList")
-//   },
-//   {
-//     path: "/add_unit",
-//     alias: "/add_unit",
-//     name: "add_unit",
-//     component: () => import("./components/Unit/UnitCreate")
-//   },
-//   {
-//     path:"/edit_unit/:id",
-//     name:"edit_unit",
-//     component: () => import("./components/Unit/UnitEdit")
-//   }
+  {
+    path: "/dashboard",
+    alias: "/dashboard",
+    name: "dashboard",
+    component: () => import("./components/Dashboard")
+  },
+  {
+    path: "/login",
+    alias: "/login",
+    name: "login",
+    component: () => import("./components/Login")
+  },
+//   
 ];
 
 const router = createRouter({
