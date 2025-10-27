@@ -24,10 +24,22 @@
                           <i class="fas fa-home"></i> Event
                         </router-link>
                       </li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#venue">Venue</a></li>
-            <li><a href="#hotels">Hotels</a></li>
-            <li><a href="#gallery">Gallery</a></li>
+                       <li class="nav-item">
+                        <router-link v-if="uid" :to="'/venue/'" class="nav-link">
+                          <i class="fas fa-home"></i> Venue
+                        </router-link>
+                      </li>
+                       <li class="nav-item">
+                        <router-link v-if="uid" :to="'/ticket_booking/'" class="nav-link">
+                          <i class="fas fa-home"></i> Ticket Booking
+                        </router-link>
+                      </li>
+                       <li class="nav-item">
+                        <router-link v-if="uid" :to="'/wishlist/'" class="nav-link">
+                          <i class="fas fa-home"></i> Wishlist
+                        </router-link>
+                      </li>
+           
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>

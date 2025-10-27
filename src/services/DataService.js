@@ -26,7 +26,66 @@ class DataService {
   DeleteEvent(id) {
     return http.delete(`/events/${id}`);
   }
+
+  VenueList() {
+    return http.get("/venue");
+  }
+
+  SingleVenue(id) {
+    return http.get(`/venue/${id}`);
+  }
+
+  AddVenue(data) {
+    return http.post("/venue", data);
+  }
+
+  UpdateVenue(id, data) {
+    return http.put(`/venue/${id}`, data);
+  }
+
+  DeleteVenue(id) {
+    return http.delete(`/venue/${id}`);
+  }
+
+  WishlistList() {
+    return http.get("/wishlist");
+  }
+
+  SingleWishlist(id) {
+    return http.get(`/wishlist/${id}`);
+  }
+
+  AddWishlist(data) {
+    return http.post("/wishlist", data);
+  }
+  UpdateWishlist(id, data) {
+    return http.put(`/wishlist/${id}`, data);
+  }
+
+  DeleteWishlist(id) {
+    return http.delete(`/wishlist/${id}`);
+  }
+   TicketBookingList() {
+    return http.get("/ticket-booking");
+  }
+
+  SingleTicketBooking(id) {
+    return http.get(`/ticket-booking/${id}`);
+  }
+
+  AddTicketBooking(data) {
+    return http.post("/ticket-booking", data);
+  }
+
+  UpdateTicketBooking(id, data) {
+    return http.put(`/ticket-booking/${id}`, data);
+  }
+
+  DeleteTicketBooking(id) {
+    return http.delete(`/ticket-booking/${id}`);
+  }
 }
+
   
 
 export default new DataService();
