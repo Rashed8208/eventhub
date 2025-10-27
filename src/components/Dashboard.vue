@@ -1,150 +1,318 @@
 <template>
-  <div class="dashboard">
-    <!-- Header -->
-    <div class="dashboard-header">
-      <h1>Dashboard</h1>
-      <p class="subtitle">Welcome back! Here's what's happening with your events.</p>
-    </div>
+        
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard Overview</h1>
+            <button class="d-none d-sm-inline-block btn btn-primary shadow-sm">
+                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+            </button>
+        </div>
 
-    <!-- Stats Cards -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #e3f2fd">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.totalEvents }}</h3>
-          <p>Total Events</p>
-          <span class="stat-change positive">+12% from last month</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #f3e5f5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9c27b0" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.totalAttendees }}</h3>
-          <p>Total Attendees</p>
-          <span class="stat-change positive">+8% from last month</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #e8f5e9">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.activeEvents }}</h3>
-          <p>Active Events</p>
-          <span class="stat-change">Happening now</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #fff3e0">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff9800" stroke-width="2">
-            <line x1="12" y1="1" x2="12" y2="23"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>${{ stats.revenue.toLocaleString() }}</h3>
-          <p>Revenue</p>
-          <span class="stat-change positive">+23% from last month</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Charts Section -->
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="card-header">
-          <h2>Event Attendance Overview</h2>
-          <select v-model="chartPeriod" class="period-select">
-            <option value="week">Last 7 Days</option>
-            <option value="month">Last Month</option>
-            <option value="year">Last Year</option>
-          </select>
-        </div>
-        <div class="chart-container">
-          <canvas ref="attendanceChart"></canvas>
-        </div>
-      </div>
-
-      <div class="chart-card">
-        <div class="card-header">
-          <h2>Event Categories</h2>
-        </div>
-        <div class="chart-container">
-          <canvas ref="categoriesChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recent Events & Activities -->
-    <div class="content-grid">
-      <div class="recent-card">
-        <div class="card-header">
-          <h2>Recent Events</h2>
-          <button class="btn-link">View All</button>
-        </div>
-        <div class="event-list">
-          <div v-for="event in recentEvents" :key="event.id" class="event-item">
-            <div class="event-image" :style="{ background: event.color }">
-              <span class="event-date">{{ event.date }}</span>
+        <!-- Statistics Cards -->
+        <div class="row">
+            <!-- Total Properties -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-primary h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Properties</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalProperties">367
+                                </div>
+                                <div class="mt-2 text-success">
+                                    <small><i class="fas fa-arrow-up me-1"></i> 12% increase</small>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-home stat-icon text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="event-details">
-              <h3>{{ event.title }}</h3>
-              <p>{{ event.location }}</p>
-              <div class="event-meta">
-                <span class="attendees">👥 {{ event.attendees }} attendees</span>
-                <span :class="['status', event.status]">{{ event.status }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="activity-card">
-        <div class="card-header">
-          <h2>Recent Activity</h2>
-        </div>
-        <div class="activity-list">
-          <div v-for="activity in activities" :key="activity.id" class="activity-item">
-            <div class="activity-icon" :style="{ background: activity.color }">
-              {{ activity.icon }}
+            <!-- Total Landlords -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-success h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Total Landlords</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalLandlords">145
+                                </div>
+                                <div class="mt-2 text-success">
+                                    <small><i class="fas fa-arrow-up me-1"></i> 8 new this month</small>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user-tie stat-icon text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="activity-content">
-              <p><strong>{{ activity.user }}</strong> {{ activity.action }}</p>
-              <span class="activity-time">{{ activity.time }}</span>
+
+            <!-- Total Tenants -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-info h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Total Tenants</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalTenants">892
+                                </div>
+                                <div class="mt-2 text-success">
+                                    <small><i class="fas fa-arrow-up me-1"></i> 45 new this month</small>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users stat-icon text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- Pending Approvals -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-warning h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Pending Approvals</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="pendingApprovals">12
+                                </div>
+                                <div class="mt-2 text-warning">
+                                    <small>Need immediate attention</small>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clock stat-icon text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+
+        <!-- Quick Actions & Recent Activity -->
+        <div class="row">
+            <!-- Quick Actions -->
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="quick-action-btn" style="background: var(--primary);">
+                                    <i class="fas fa-home fa-2x mb-2"></i><br>
+                                    View All Posts<br>
+                                    <small>367 Properties</small>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="quick-action-btn" style="background: var(--warning);">
+                                    <i class="fas fa-flag fa-2x mb-2"></i><br>
+                                    Reported Listings<br>
+                                    <small>3 Needs Review</small>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="quick-action-btn" style="background: var(--info);">
+                                    <i class="fas fa-user-clock fa-2x mb-2"></i><br>
+                                    Pending Approvals<br>
+                                    <small>12 Landlords</small>
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="quick-action-btn" style="background: var(--danger);">
+                                    <i class="fas fa-ban fa-2x mb-2"></i><br>
+                                    Banned Users<br>
+                                    <small>7 Accounts</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Recent Activity</h6>
+                        <span class="badge bg-primary">Live</span>
+                    </div>
+                    <div class="card-body recent-activity">
+                        <div class="activity-item new">
+                            <div class="d-flex justify-content-between">
+                                <strong>New Property Listed</strong>
+                                <small class="text-muted">2 min ago</small>
+                            </div>
+                            <p class="mb-0">"Luxury Apartment Downtown" by John Doe</p>
+                            <small class="text-primary">Needs approval</small>
+                        </div>
+
+                        <div class="activity-item warning">
+                            <div class="d-flex justify-content-between">
+                                <strong>Property Reported</strong>
+                                <small class="text-muted">15 min ago</small>
+                            </div>
+                            <p class="mb-0">"Beach House Malibu" reported for fake images</p>
+                            <small class="text-warning">3 reports received</small>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between">
+                                <strong>New Landlord Registered</strong>
+                                <small class="text-muted">1 hour ago</small>
+                            </div>
+                            <p class="mb-0">Sarah Johnson signed up as landlord</p>
+                            <small class="text-info">Pending verification</small>
+                        </div>
+
+                        <div class="activity-item danger">
+                            <div class="d-flex justify-content-between">
+                                <strong>User Banned</strong>
+                                <small class="text-muted">2 hours ago</small>
+                            </div>
+                            <p class="mb-0">Mike Smith banned for multiple violations</p>
+                            <small class="text-danger">Permanent ban</small>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between">
+                                <strong>Rent Payment Processed</strong>
+                                <small class="text-muted">3 hours ago</small>
+                            </div>
+                            <p class="mb-0">$1,200 payment for "Garden Apartment"</p>
+                            <small class="text-success">Successful</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Stats -->
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card bg-danger text-white shadow">
+                    <div class="card-body">
+                        <div class="text-white-50 small">Banned Users</div>
+                        <div class="mb-0 h4" id="bannedUsers">7</div>
+                        <i class="fas fa-ban fa-2x text-white-300 float-end"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                        <div class="text-white-50 small">Reported Listings</div>
+                        <div class="mb-0 h4" id="reportedListings">3</div>
+                        <i class="fas fa-flag fa-2x text-white-300 float-end"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        <div class="text-white-50 small">Active Today</div>
+                        <div class="mb-0 h4" id="activeToday">89</div>
+                        <i class="fas fa-user-check fa-2x text-white-300 float-end"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
 </template>
 
 <script>
 export default {
-  name: 'Dashboard',
-  props: {
-    msg: String
+  name: "Dashboard",
+  data() {
+    return {
+      isCollapsed: false,
+      isDark: localStorage.getItem("darkMode") === "true",
+      menuItems: [
+        { name: "Dashboard", icon: "fas fa-tachometer-alt", route: "/dashboard" },
+        { name: "Events", icon: "fas fa-calendar-alt", route: "/events" },
+        { name: "Bookings", icon: "fas fa-ticket-alt", route: "/bookings" },
+        { name: "Users", icon: "fas fa-users", route: "/users" },
+        { name: "Reports", icon: "fas fa-chart-line", route: "/reports" },
+        { name: "Settings", icon: "fas fa-cogs", route: "/settings" },
+      ],
+      stats: {
+        totalEvents: 24,
+        upcomingEvents: 5,
+        totalAttendees: 1248,
+        revenue: 24560
+      },
+      recentEvents: [
+        {
+          id: 1,
+          title: 'Tech Conference 2023',
+          date: '2023-11-15',
+          location: 'Convention Center',
+          attendees: 320,
+          status: 'Upcoming'
+        },
+        {
+          id: 2,
+          title: 'Product Launch',
+          date: '2023-10-28',
+          location: 'Downtown Hall',
+          attendees: 150,
+          status: 'Completed'
+        },
+        {
+          id: 3,
+          title: 'Marketing Workshop',
+          date: '2023-11-05',
+          location: 'Business Center',
+          attendees: 85,
+          status: 'Upcoming'
+        },
+        {
+          id: 4,
+          title: 'Annual Gala',
+          date: '2023-09-20',
+          location: 'Grand Hotel',
+          attendees: 450,
+          status: 'Completed'
+        }
+      ]
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+    toggleDarkMode() {
+      this.isDark = !this.isDark;
+      localStorage.setItem("darkMode", this.isDark);
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return {
+        day: date.getDate(),
+        month: date.toLocaleString('default', { month: 'short' })
+      };
+    },
+    createNewEvent() {
+      alert('Navigate to event creation form');
+    },
+    logout() {
+      sessionStorage.removeItem('uid');
+      this.$router.push('/');
+    }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -424,3 +592,369 @@ export default {
 
 
 
+<style scoped>
+/* Layout structure */
+#wrapper {
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+.sidebar {
+  background-color: #4e73df;
+  color: #fff;
+  min-height: 100vh;
+  width: 250px;
+  transition: all 0.3s ease;
+}
+.sidebar.collapsed {
+  width: 80px;
+}
+.sidebar-heading {
+  font-size: 1.25rem;
+}
+.list-group-item {
+  background: transparent;
+  border: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+#page-content-wrapper {
+  transition: all 0.3s ease;
+}
+
+/* Dark Mode Styles */
+.dark {
+  background-color: #1a1d24;
+  color: #f8f9fa;
+}
+.dark .sidebar {
+  background-color: #111827;
+}
+.dark .navbar {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+}
+.dark .list-group-item {
+  color: #e5e7eb !important;
+}
+.dark .list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.dark .btn-outline-secondary {
+  border-color: #9ca3af;
+  color: #f9fafb;
+}
+.dark .btn-outline-secondary:hover {
+  background-color: #374151;
+}
+
+/* Dashboard specific styles */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+/* Stats Cards */
+.stats-section {
+  margin-bottom: 40px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.events-icon { background-color: #3498db; }
+.upcoming-icon { background-color: #2ecc71; }
+.attendees-icon { background-color: #9b59b6; }
+.revenue-icon { background-color: #f1c40f; }
+
+.stat-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #7f8c8d;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Main Content */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Recent Events */
+.recent-events {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.view-all-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-card {
+  display: flex;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+}
+
+.event-card:hover {
+  background-color: #f1f1f1;
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.event-day {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.event-month {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.event-location {
+  display: flex;
+  align-items: center;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+}
+
+.event-location i {
+  margin-right: 5px;
+}
+
+.event-stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.event-attendees {
+  display: flex;
+  align-items: center;
+  color: #7f8c8d;
+}
+
+.event-attendees i {
+  margin-right: 5px;
+}
+
+.event-status {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.upcoming {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.completed {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+/* Quick Actions */
+.quick-actions {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-btn i {
+  margin-right: 8px;
+}
+
+.primary-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background-color: #2980b9;
+}
+
+.secondary-btn {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  border: 1px solid #dee2e6;
+}
+
+.secondary-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Chart Section */
+.chart-section {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chart-container {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #dee2e6;
+}
+
+.chart-placeholder {
+  text-align: center;
+  color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Smooth animations */
+button, .sidebar, .navbar, main {
+  transition: all 0.3s ease;
+}
+</style>
