@@ -5,6 +5,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
   <div id="app">
+  
     <!-- Only show header if not on dashboard -->
     <header v-if="!isDashboardRoute" id="header" class="header d-flex align-items-center fixed-top">
       <div class="container-fluid container-xl position-relative d-flex align-items-center">
@@ -17,14 +18,17 @@
 
          <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
-          <li class="nav-item">
-            <router-link :to="'/speaker/'" class="nav-link active">
-              <i class="fas fa-tachometer-alt"></i> Speaker
-            </router-link>
-            </li>
-          <li><a href="#schedule">Schedule</a></li>
-          <li><a href="#venue">Venue</a></li>
+          <li><router-link to="/">Home</router-link></li>
+           <li>
+              <router-link to="speaker" class="" href="">Speaker</router-link>
+          </li>
+         <li>
+          <router-link to="event_schedule" class="" href="">Event Schedule</router-link>
+        </li>
+
+           <li>
+          <router-link to="venue" class="" href="">Venue</router-link>
+        </li>
           <li><a href="#hotels">Hotels</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -53,41 +57,12 @@
 
       </div>
     </header>
-    <nav v-if="uid" class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Hotel Admin</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/events" class="nav-link">Event</router-link>
-                </li>
 
-
-                <!-- <li class="nav-item">
-                    <router-link to="/room_list" class="nav-link">Room</router-link>
-                </li>
-
-
-
-                <li class="nav-item">
-                    <router-link to="/booking_list" class="nav-link">Booking</router-link>
-                </li> -->
-                
-                <li class="nav-item">
-                    <a @click="logout" class="nav-link" href="#">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <router-view></router-view>
+  
+ <router-view></router-view>
 
     <!-- Only show footer if not on dashboard -->
+    
     <footer v-if="!isDashboardRoute" id="footer" class="footer dark-background">
 
       <div class="footer-top">
@@ -188,25 +163,6 @@
 
 <script>
 export default {
-  name: 'App',
-  data() {
-    return {
-      uid: sessionStorage.getItem('uid')
-    };
-  },
-  computed: {
-    isDashboardRoute() {
-      // Check if current route is the dashboard
-      return this.$route.path === '/dashboard';
-    }
-  },
-  methods: {
-    logout() {
-      this.uid = "";
-      sessionStorage.setItem('uid', '');
-      window.location.href = '/';
-    }
-  }
-}
+  name: "App",
+};
 </script>
-
