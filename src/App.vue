@@ -1,4 +1,9 @@
 <template>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - TheEvent Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
   <div id="app">
     <!-- Only show header if not on dashboard -->
     <header v-if="!isDashboardRoute" id="header" class="header d-flex align-items-center fixed-top">
@@ -10,62 +15,75 @@
           <!-- <h1 class="sitename">TheEvent</h1>  -->
         </a>
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <ul class="nav flex-column">
-                      <li class="nav-item">
-                        <router-link v-if="uid" :to="'/dashboard/'" class="nav-link active">
-                          <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </router-link>
-
-                      </li>
-                      <li class="nav-item">
-                        <router-link v-if="uid" :to="'/events/'" class="nav-link">
-                          <i class="fas fa-home"></i> Event
-                        </router-link>
-                      </li>
-                       <li class="nav-item">
-                        <router-link v-if="uid" :to="'/venue/'" class="nav-link">
-                          <i class="fas fa-home"></i> Venue
-                        </router-link>
-                      </li>
-                       <li class="nav-item">
-                        <router-link v-if="uid" :to="'/ticket_booking/'" class="nav-link">
-                          <i class="fas fa-home"></i> Ticket Booking
-                        </router-link>
-                      </li>
-                       <li class="nav-item">
-                        <router-link v-if="uid" :to="'/wishlist/'" class="nav-link">
-                          <i class="fas fa-home"></i> Wishlist
-                        </router-link>
-                      </li>
-           
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dashboard 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
+         <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home<br></a></li>
+          <li class="nav-item">
+            <router-link :to="'/speaker/'" class="nav-link active">
+              <i class="fas fa-tachometer-alt"></i> Speaker
+            </router-link>
             </li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#venue">Venue</a></li>
+          <li><a href="#hotels">Hotels</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
 
         <a class="cta-btn d-none d-sm-block" href="#buy-tickets">Buy Tickets</a>
 
       </div>
     </header>
+    <nav v-if="uid" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Hotel Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/events" class="nav-link">Event</router-link>
+                </li>
+
+
+                <!-- <li class="nav-item">
+                    <router-link to="/room_list" class="nav-link">Room</router-link>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <router-link to="/booking_list" class="nav-link">Booking</router-link>
+                </li> -->
+                
+                <li class="nav-item">
+                    <a @click="logout" class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <router-view></router-view>
 

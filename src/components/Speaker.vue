@@ -36,11 +36,11 @@
 </template>
 
 <script>
-import Speakers from "./components/Speaker.vue";
+import Speaker from "./components/Speaker.vue";
 
 export default {
   components: {
-    Speakers,
+    Speaker,
   },
 };
 </script>

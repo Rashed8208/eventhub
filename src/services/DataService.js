@@ -5,7 +5,7 @@ class DataService {
     return http.post("/login", data);
   }
   
-  EventList() {
+  EventIndex() {
     return http.get("/events");
   }
 
@@ -27,7 +27,7 @@ class DataService {
     return http.delete(`/events/${id}`);
   }
 
-  VenueList() {
+  VenueIndex() {
     return http.get("/venue");
   }
 
@@ -47,7 +47,7 @@ class DataService {
     return http.delete(`/venue/${id}`);
   }
 
-  WishlistList() {
+  WishlistIndex() {
     return http.get("/wishlist");
   }
 
@@ -65,7 +65,7 @@ class DataService {
   DeleteWishlist(id) {
     return http.delete(`/wishlist/${id}`);
   }
-   TicketBookingList() {
+   TicketBookingIndex() {
     return http.get("/ticket-booking");
   }
 
