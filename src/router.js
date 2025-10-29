@@ -20,11 +20,10 @@ const routes =  [
     component: () => import("./components/Dashboard")
   }, 
   {
-  path: '/event-schedule',
-  alias:"/event-schedule",
-  name: "event_schedule",
-  component: () => import('./components/Event_Schedule.vue')
- },
+  path: "/event_schedule",
+  name: "Event_Schedule",
+  component: () => import("./components/Event_Schedule.vue"),
+},
  {
   path: '/speaker',
   alias:"/speaker",
