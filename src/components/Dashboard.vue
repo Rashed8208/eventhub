@@ -1,47 +1,7 @@
 <template>
   <div :class="['d-flex', { dark: isDark }]" id="wrapper">
-    <!-- Sidebar -->
-    <aside class="border-end sidebar" :class="{ collapsed: isCollapsed }" id="sidebar-wrapper">
-      <div class="sidebar-heading text-white fw-bold text-center py-3">
-        <i class="fas fa-bolt me-2"></i> EventHub
-      </div>
-      <div class="list-group list-group-flush">
-        <router-link
-          v-for="item in menuItems"
-          :key="item.name"
-          :to="item.route"
-          class="list-group-item list-group-item-action text-white"
-        >
-          <i :class="item.icon" class="me-2"></i>
-          <span v-if="!isCollapsed">{{ item.name }}</span>
-        </router-link>
-      </div>
-    </aside>
-
     <!-- Page Content -->
     <div id="page-content-wrapper" class="flex-grow-1">
-      <!-- Top Navbar -->
-      <nav class="navbar navbar-expand-lg bg-light border-bottom shadow-sm py-2 px-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <button class="btn btn-outline-primary me-2" @click="toggleSidebar">
-            <i class="fas fa-bars"></i>
-          </button>
-          <h5 class="m-0 text-primary fw-bold">Dashboard</h5>
-        </div>
-
-        <div class="d-flex align-items-center gap-2">
-          <!-- Dark Mode Toggle -->
-          <button class="btn btn-outline-secondary" @click="toggleDarkMode">
-            <i :class="isDark ? 'fas fa-sun' : 'fas fa-moon'"></i>
-          </button>
-
-          <!-- Logout -->
-          <button class="btn btn-danger btn-sm">
-            <i class="fas fa-sign-out-alt me-1"></i> Logout
-          </button>
-        </div>
-      </nav>
-
       <!-- Main Slot -->
       <main class="p-4">
         <slot />
@@ -53,6 +13,7 @@
 <script>
 export default {
   name: 'Dashboard',
+
   props: {
     msg: String
   }

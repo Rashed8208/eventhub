@@ -19,7 +19,7 @@ class DataService {
 
   
   UpdateEvent(id, data) {
-    return http.put(`/events/${id}`, data);
+    return http.post(`/events/${id}`, data);
   }
 
   

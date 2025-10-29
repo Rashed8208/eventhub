@@ -33,20 +33,20 @@
         </div>
         <div class="col-md-12 mb-3">
           <label>Image</label>
-          <input @change="handleFileUpload" type="file" class="form-control" />
+          <input id="image" type="file" class="form-control" />
           <div v-if="form.image && !newImage">
             <img :src="form.image" width="100" class="mt-2" />
           </div>
         </div>
       </div>
 
-      <button class="btn btn-primary">Update Event</button>
+      <button @click="updateEvent" class="btn btn-primary">Update Event</button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import DataService from "../../services/DataService";
 
 export default {
   name: "EditEvent",
@@ -56,25 +56,42 @@ export default {
       newImage: null,
     };
   },
-  async mounted() {
-    const id = this.$route.params.id;
-    const res = await axios.get(`/api/events/${id}`);
-    this.form = res.data;
-  },
   methods: {
-    handleFileUpload(e) {
-      this.newImage = e.target.files[0];
+    getevent(id) {
+      DataService.SingleEvent(id)
+      .then(response => {
+        if(response.data) this.form = response.data;
+        else alert(response.data.error || 'Failed to load unit');
+      })
+      .catch(e => console.log(e));
     },
-    async updateEvent() {
+    updateEvent() {
       const id = this.$route.params.id;
-      const formData = new FormData();
-      for (const key in this.form) formData.append(key, this.form[key]);
-      if (this.newImage) formData.set("image", this.newImage);
+      let formData = new FormData();
+      formData.append('name', this.form.name);
+      formData.append('address', this.form.address);
+      formData.append('decription', this.form.decription);
+      formData.append('rating', this.form.rating);
+      formData.append('phone', this.form.phone);
+      formData.append('_method', "PUT");
+      const imageInput = document.getElementById('image');
+      if (imageInput.files.length > 0) {
+          formData.append('image', imageInput.files[0]);
+      }
 
-      await axios.post(`/api/events/${id}?_method=PUT`, formData);
-      alert("Event updated successfully!");
-      this.$router.push("/events");
-    },
+      // update
+      DataService.UpdateEvent(id, formData)
+      .then(response => {
+          console.log(response.data);
+          alert('Event updated successfully!');
+          this.$router.push({ name: 'index_event' });
+      })
+      .catch(e => console.log(e));
+    }
   },
+  mounted() {
+    const id = this.$route.params.id;
+    if (id) this.getevent(id);
+  }
 };
 </script>

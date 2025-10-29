@@ -37,62 +37,62 @@ const routes =  [
   component: () => import('./components/Venue.vue')
 } ,
   {
-  path: '/events',
+  path: '/index_event',
   name: 'index_event',
-  component: () => import('./components/Event/EventIndex.vue')
+  component: () => import('./components/Event/EventIndex')
 },
 {
-  path: '/events/create',
+  path: '/add_event',
   name: 'add_event',
   component: () => import('./components/Event/EventCreate.vue')
 },
 {
-  path: '/events/edit/:id',
+  path: '/edit_event/:id',
   name: 'edit_event',
   component: () => import('./components/Event/EventEdit.vue')
 },
 {
-  path: '/venue',
+  path: '/index_venue',
   name: 'index_venue',
   component: () => import('./components/Venue/VenueIndex.vue')
 },
 {
-  path: '/venue/create',
+  path: '/add_venue',
   name: 'add_venue',
   component: () => import('./components/Venue/VenueCreate.vue')
 },
 {
-  path: '/venue/edit/:id',
+  path: '/edit_venue/:id',
   name: 'edit_venue',
   component: () => import('./components/Venue/VenueEdit.vue')
 },
 {
-  path: '/ticket_booking',
+  path: '/index_ticket_booking',
   name: 'index_ticket_booking',
   component: () => import('./components/Ticket_booking/Ticket_bookingIndex.vue')
 },
 {
-  path: '/ticket_booking/create',
+  path: '/add_ticket_booking',
   name: 'add_ticket_booking',
   component: () => import('./components/Ticket_booking/Ticket_bookingCreate.vue')
 },
 {
-  path: '/ticket_booking/edit/:id',
+  path: '/edit_ticket_booking/:id',
   name: 'edit_ticket_booking',
   component: () => import('./components/Ticket_booking/Ticket_bookingEdit.vue')
 },
 {
-  path: '/wishlist',
+  path: '/wishlist_index',
   name: 'wishlist_index',
   component: () => import('./components/Wishlist/WishlistIndex.vue')
 },
 {
-  path: '/wishlist/create',
+  path: '/add_wishlist',
   name: 'add_wishlist',
   component: () => import('./components/Wishlist/WishlistCreate.vue')
 },
 {
-  path: '/wishlist/edit/:id',
+  path: '/edit_wishlist/:id',
   name: 'edit_wishlist',
   component: () => import('./components/Wishlist/WishlistEdit.vue')
 },

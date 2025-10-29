@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-12 mb-3">
           <label>Image</label>
-          <input @change="handleFileUpload" type="file" class="form-control" />
+          <input id="image" type="file" class="form-control" />
         </div>
       </div>
 
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import DataService from "../../services/DataService";
 
 export default {
   name: "CreateEvent",
@@ -62,17 +62,30 @@ export default {
     };
   },
   methods: {
-    handleFileUpload(e) {
-      this.form.image = e.target.files[0];
-    },
-    async createEvent() {
-      const formData = new FormData();
-      for (const key in this.form) formData.append(key, this.form[key]);
-
-      await axios.post("/api/events", formData);
-      alert("Event created successfully!");
-      this.$router.push("/events");
-    },
+    createEvent() {
+        let formData = new FormData();
+        formData.append('title', this.form.title);
+        formData.append('location', this.form.location);
+        formData.append('date', this.form.date);
+        formData.append('start_time', this.form.start_time);
+        formData.append('end_time', this.form.end_time);
+        formData.append('price', this.form.price);
+        formData.append('available_tickets', this.form.available_tickets);
+        const imageInput = document.getElementById('image');
+        if (imageInput.files.length > 0) {
+            formData.append('image', imageInput.files[0]);
+        }
+        
+        DataService.AddEvent(formData)
+        .then(response => {
+            console.log(response.data);
+            alert("Event added successfully!");
+            this.$router.push({ name: 'index_event' });
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
   },
 };
 </script>

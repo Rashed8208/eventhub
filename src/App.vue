@@ -1,14 +1,9 @@
 <template>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - TheEvent Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <div id="app">
+
   
     <!-- Only show header if not on dashboard -->
   <header
-    v-if="!isDashboardRoute"
+    v-if="!uid"
     id="header"
     class="header d-flex align-items-center fixed-top custom-header"
   >
@@ -32,6 +27,30 @@
       <a class="cta-btn d-none d-sm-block" href="#buy-tickets">Buy Tickets</a>
     </div>
   </header>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" v-if="uid">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <router-link to="/index_event" class="nav-link active" aria-current="page">Event</router-link>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
 
   
  <router-view></router-view>
@@ -133,13 +152,25 @@
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  </div>
+
 </template>
 
 <script>
-export default {
-  name: "App",
-};
+  export default {
+    name: 'App',
+    data() {
+      return {
+        uid:sessionStorage.getItem('uid')
+      };
+    },
+    methods: {
+      logout() {
+        this.uid="";
+        sessionStorage.setItem('uid', '');
+        window.location.href='/';
+      }
+    }
+  }
 </script>
 <style scoped>
 .custom-header {

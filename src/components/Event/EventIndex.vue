@@ -34,7 +34,7 @@
               <td>
                 <img
                   v-if="event.image"
-                  :src="`/uploads/events/${event.image}`"
+                  :src="`${event.image}`"
                   alt="Event Image"
                   width="60"
                   height="60"
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     getData() {
-      DataService.EventList()
+      DataService.EventIndex()
         .then((response) => {
           if (response.data) this.eventData = response.data;
           else alert(response.data.error);
