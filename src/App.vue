@@ -40,7 +40,13 @@
           <router-link to="/index_event" class="nav-link active" aria-current="page">Event</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <router-link to="/index_venue" class="nav-link active" aria-current="page">Venue</router-link>
+        </li>
+         <li class="nav-item">
+          <router-link to="/index_ticket_booking" class="nav-link active" aria-current="page">Ticket Booking</router-link>
+        </li>
+         <li class="nav-item">
+          <router-link to="/index_wishlist" class="nav-link active" aria-current="page">Wishlist</router-link>
         </li>
         
         <li class="nav-item">

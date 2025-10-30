@@ -32,14 +32,13 @@ const routes =  [
 } ,
  {
   path: '/venue',
-  alias:"/venue",
   name: 'venue',
   component: () => import('./components/Venue.vue')
 } ,
   {
   path: '/index_event',
   name: 'index_event',
-  component: () => import('./components/Event/EventIndex')
+  component: () => import('./components/Event/EventIndex.vue')
 },
 {
   path: '/add_event',
@@ -82,8 +81,8 @@ const routes =  [
   component: () => import('./components/Ticket_booking/Ticket_bookingEdit.vue')
 },
 {
-  path: '/wishlist_index',
-  name: 'wishlist_index',
+  path: '/index_wishlist',
+  name: 'index_wishlist',
   component: () => import('./components/Wishlist/WishlistIndex.vue')
 },
 {

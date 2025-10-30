@@ -1,65 +1,74 @@
 <template>
-  <div class="container mt-4">
-    <h2 class="mb-3">Edit Ticket Booking</h2>
-    <form @submit.prevent="updateBooking">
-      <div class="mb-3">
-        <label>User ID</label>
-        <input type="number" v-model="form.user_id" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label>Event ID</label>
-        <input type="number" v-model="form.event_id" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label>Quantity</label>
-        <input type="number" v-model="form.quantity" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label>Total Amount</label>
-        <input type="number" step="0.01" v-model="form.total_amount" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label>Status</label>
-        <select v-model="form.status" class="form-select">
-          <option value="0">Pending</option>
-          <option value="1">Confirmed</option>
-          <option value="2">Cancelled</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label>Booking Date</label>
-        <input type="date" v-model="form.booking_date" class="form-control" />
+  <div class="container py-5">
+    <h2 class="mb-4">Edit Ticket Booking</h2>
+    <form @submit.prevent="updateTicket">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>User ID</label>
+          <input v-model="form.user_id" type="number" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Event ID</label>
+          <input v-model="form.event_id" type="number" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Quantity</label>
+          <input v-model="form.quantity" type="number" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Total Amount</label>
+          <input v-model="form.total_amount" type="number" step="0.01" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Status</label>
+          <select v-model="form.status" class="form-control">
+            <option value="0">Pending</option>
+            <option value="1">Confirmed</option>
+            <option value="2">Cancelled</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Booking Date</label>
+          <input v-model="form.booking_date" type="date" class="form-control" />
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Update</button>
+      <button class="btn btn-primary">Update Ticket</button>
     </form>
   </div>
 </template>
 
 <script>
-import DataService from "@/services/DataService";
+import DataService from "../../services/DataService";
 
 export default {
+  name: "Ticket_bookingEdit",
   data() {
     return {
       form: {},
     };
   },
   methods: {
-    async fetchBooking() {
-      const id = this.$route.params.id;
-      const response = await DataService.getTicketBookingById(id);
-      this.form = response.data;
+    getTicketBooking(id) {
+      DataService.SingleTicketBooking(id)
+        .then((response) => {
+          this.form = response.data;
+        })
+        .catch((e) => console.log(e));
     },
-    async updateBooking() {
+    updateTicketBooking() {
       const id = this.$route.params.id;
-      await DataService.updateTicketBooking(id, this.form);
-      alert("Booking updated successfully!");
-      this.$router.push("/ticket-bookings");
+      DataService.UpdateTicketBooking(id, this.form)
+        .then(() => {
+          alert("Ticket updated successfully!");
+          this.$router.push({ name: "index_ticket_booking" });
+        })
+        .catch((e) => console.log(e));
     },
   },
   mounted() {
-    this.fetchBooking();
+    const id = this.$route.params.id;
+    if (id) this.getTicket(id);
   },
 };
 </script>

@@ -68,30 +68,33 @@ export default {
     updateEvent() {
       const id = this.$route.params.id;
       let formData = new FormData();
-      formData.append('name', this.form.name);
-      formData.append('address', this.form.address);
-      formData.append('decription', this.form.decription);
-      formData.append('rating', this.form.rating);
-      formData.append('phone', this.form.phone);
-      formData.append('_method', "PUT");
+      formData.append('title', this.form.title);
+      formData.append('location', this.form.location);
+      formData.append('date', this.form.date);
+      formData.append('start_time', this.form.start_time);
+      formData.append('end_time', this.form.end_time);
+      formData.append('price', this.form.price);
+      formData.append('available_tickets', this.form.available_tickets);
+      formData.append('_method', 'PUT');
+
       const imageInput = document.getElementById('image');
       if (imageInput.files.length > 0) {
-          formData.append('image', imageInput.files[0]);
+        formData.append('image', imageInput.files[0]);
       }
 
-      // update
       DataService.UpdateEvent(id, formData)
-      .then(response => {
+        .then((response) => {
           console.log(response.data);
-          alert('Event updated successfully!');
-          this.$router.push({ name: 'index_event' });
-      })
-      .catch(e => console.log(e));
+          alert("Event updated successfully!");
+          this.$router.push({ name: "index_event" });
+        })
+        .catch((e) => console.log(e));
     }
-  },
-  mounted() {
-    const id = this.$route.params.id;
-    if (id) this.getevent(id);
-  }
-};
-</script>
+
+    },
+    mounted() {
+      const id = this.$route.params.id;
+      if (id) this.getevent(id);
+    }
+  };
+  </script>

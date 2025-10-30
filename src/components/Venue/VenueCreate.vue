@@ -1,60 +1,63 @@
 <template>
-  <div class="container mt-4">
-    <h2 class="mb-3">Create Venue</h2>
+  <div class="container py-5">
+    <h2 class="mb-4">Add New Venue</h2>
+    <form @submit.prevent="CreateVenue" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>Name</label>
+          <input v-model="form.name" type="text" class="form-control" />
+        </div>
 
-    <form @submit.prevent="createVenue" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label>Name</label>
-        <input type="text" v-model="form.name" class="form-control" />
+        <div class="col-md-6 mb-3">
+          <label>City</label>
+          <input v-model="form.city" type="text" class="form-control" />
+        </div>
+
+        <div class="col-md-12 mb-3">
+          <label>Description</label>
+          <textarea v-model="form.description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Address</label>
+          <input v-model="form.address" type="text" class="form-control" />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label>Capacity</label>
+          <input v-model="form.capacity" type="number" class="form-control" />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label>Price per Day</label>
+          <input v-model="form.price_per_day" type="number" step="0.01" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Status</label>
+          <select v-model="form.status" class="form-control">
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Image</label>
+          <input id="image" type="file" class="form-control" />
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label>Description</label>
-        <textarea v-model="form.description" class="form-control"></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label>Address</label>
-        <input type="text" v-model="form.address" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label>City</label>
-        <input type="text" v-model="form.city" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label>Capacity</label>
-        <input type="number" v-model="form.capacity" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label>Price Per Day</label>
-        <input type="number" step="0.01" v-model="form.price_per_day" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label>Image</label>
-        <input type="file" @change="onFileChange" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label>Status</label>
-        <select v-model="form.status" class="form-select">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-success">Save Venue</button>
+      <button type="submit" class="btn btn-success">Create Venue</button>
     </form>
   </div>
 </template>
 
 <script>
-import DataService from "@/services/DataService";
+import DataService from "../../services/DataService";
 
 export default {
+  name: "CreateVenue",
   data() {
     return {
       form: {
@@ -64,22 +67,33 @@ export default {
         city: "",
         capacity: "",
         price_per_day: "",
-        image: null,
-        status: "active",
+        status: "",
       },
     };
   },
   methods: {
-    onFileChange(e) {
-      this.form.image = e.target.files[0];
-    },
-    async createVenue() {
-      const formData = new FormData();
-      for (let key in this.form) formData.append(key, this.form[key]);
+    CreateVenue() {
+      let formData = new FormData();
+      formData.append("name", this.form.name);
+      formData.append("description", this.form.description);
+      formData.append("address", this.form.address);
+      formData.append("city", this.form.city);
+      formData.append("capacity", this.form.capacity);
+      formData.append("price_per_day", this.form.price_per_day);
+      formData.append("status", this.form.status);
 
-      await DataService.createVenue(formData);
-      alert("Venue created successfully!");
-      this.$router.push("/venues");
+      const imageInput = document.getElementById("image");
+      if (imageInput.files.length > 0) {
+        formData.append("image", imageInput.files[0]);
+      }
+
+      DataService.AddVenue(formData)
+        .then((response) => {
+          console.log(response.data);
+          alert("Venue created successfully!");
+          this.$router.push({ name: "index_venue" });
+        })
+        .catch((e) => console.log(e));
     },
   },
 };

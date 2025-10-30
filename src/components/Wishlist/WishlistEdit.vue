@@ -1,51 +1,62 @@
 <template>
-  <div class="container mt-4">
-    <h2 class="mb-3">Edit Wishlist</h2>
-
+  <div class="container py-5">
+    <h2 class="mb-4">Edit Wishlist Item</h2>
     <form @submit.prevent="updateWishlist">
-      <div class="mb-3">
-        <label>User ID</label>
-        <input type="number" v-model="form.user_id" class="form-control" required />
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>User ID</label>
+          <input v-model="form.user_id" type="number" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Event ID</label>
+          <input v-model="form.event_id" type="number" class="form-control" />
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label>Event ID</label>
-        <input type="number" v-model="form.event_id" class="form-control" required />
-      </div>
-
-      <button type="submit" class="btn btn-primary">Update Wishlist</button>
+      <button @click="updateWishlist" class="btn btn-primary">Update Wishlist</button>
     </form>
   </div>
 </template>
 
 <script>
-import DataService from "@/services/DataService";
+import DataService from "../../services/DataService";
 
 export default {
   name: "EditWishlist",
   data() {
     return {
-      form: {
-        user_id: "",
-        event_id: "",
-      },
+      form: {},
     };
   },
   methods: {
-    async fetchWishlist() {
-      const id = this.$route.params.id;
-      const res = await DataService.getWishlistById(id);
-      this.form = res.data;
+    getWishlist(id) {
+      DataService.SingleWishlist(id)
+        .then((response) => {
+          if (response.data) this.form = response.data;
+          else alert("Failed to load wishlist item.");
+        })
+        .catch((e) => console.log(e));
     },
-    async updateWishlist() {
+    updateWishlist() {
       const id = this.$route.params.id;
-      await DataService.updateWishlist(id, this.form);
-      alert("Wishlist updated successfully!");
-      this.$router.push("/wishlists");
+       let formData = new FormData();
+
+       formData.append("user_id", this.form.user_id);
+       formData.append("event_id", this.form.event_id);
+
+      DataService.UpdateWishlist(id, formData)
+        .then((response) => {
+          console.log(response.data);
+          alert("Wishlist item updated successfully!");
+          this.$router.push({ name: "index_wishlist" });
+        })
+        .catch((e) => console.log(e));
     },
   },
   mounted() {
-    this.fetchWishlist();
+    const id = this.$route.params.id;
+    if (id) this.getWishlist(id);
   },
 };
 </script>
