@@ -1,129 +1,198 @@
 <template>
   <!-- Schedule Section -->
-  <section id="schedule" class="schedule section">
+  <section id="schedule" class="schedule section mt-5 pt-5">
 
     <!-- Section Title -->
-    <div class="container section-title">
-      <h2>Event Schedule<br></h2>
-      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    <div class="container section-title mt-5">
+      <h2>Schedule of {{ eventData.title }}<br></h2>
+      <p>{{ eventData.location }}</p>
     </div><!-- End Section Title -->
 
     <div class="container">
-
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" href="#day-1" role="tab" data-bs-toggle="tab">Day 1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#day-2" role="tab" data-bs-toggle="tab">Day 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#day-3" role="tab" data-bs-toggle="tab">Day 3</a>
-        </li>
-      </ul>
-
-      <div class="tab-content row justify-content-center">
-
-        <h3 class="sub-heading">
-          Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia.
-          Eius necessitatibus voluptatem quis labore perspiciatis quia.
-        </h3>
-
-        <!-- Schedule Day 1 -->
-        <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-1">
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>09:30 AM</time></div>
-            <div class="col-md-10">
-              <h4>Registration</h4>
-              <p>Fugit voluptas iusto maiores temporibus autem numquam magnam.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>10:00 AM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-1-2.jpg" alt="Brenden Legros">
-              </div>
-              <h4>Keynote <span>Brenden Legros</span></h4>
-              <p>Facere provident incidunt quos voluptas.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>11:00 AM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-2-2.jpg" alt="Hubert Hirthe">
-              </div>
-              <h4>Et voluptatem iusto dicta nobis. <span>Hubert Hirthe</span></h4>
-              <p>Maiores dignissimos neque qui cum accusantium ut sit sint inventore.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>12:00 PM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-3-2.jpg" alt="Cole Emmerich">
-              </div>
-              <h4>Explicabo et rerum quis et ut ea. <span>Cole Emmerich</span></h4>
-              <p>Veniam accusantium laborum nihil eos eaque accusantium aspernatur.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>02:00 PM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-4-2.jpg" alt="Jack Christiansen">
-              </div>
-              <h4>Qui non qui vel amet culpa sequi. <span>Jack Christiansen</span></h4>
-              <p>Nam ex distinctio voluptatem doloremque suscipit iusto.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>03:00 PM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-5.jpg" alt="Alejandrin Littel">
-              </div>
-              <h4>Quos ratione neque expedita asperiores. <span>Alejandrin Littel</span></h4>
-              <p>Eligendi quo eveniet est nobis et ad temporibus odio quo.</p>
-            </div>
-          </div>
-
-          <div class="row schedule-item">
-            <div class="col-md-2"><time>04:00 PM</time></div>
-            <div class="col-md-10">
-              <div class="speaker">
-                <img src="assets/img/speakers/speaker-6.jpg" alt="Willow Trantow">
-              </div>
-              <h4>Quo qui praesentium nesciunt <span>Willow Trantow</span></h4>
-              <p>Voluptatem et alias dolorum est aut sit enim neque veritatis.</p>
-            </div>
-          </div>
-        </div><!-- End Schedule Day 1 -->
-
-        <!-- Schedule Day 2 -->
-        <div role="tabpanel" class="col-lg-9 tab-pane fade" id="day-2">
-          <!-- Duplicate your items here for Day 2 (same as before) -->
-        </div><!-- End Schedule Day 2 -->
-
-        <!-- Schedule Day 3 -->
-        <div role="tabpanel" class="col-lg-9 tab-pane fade" id="day-3">
-          <!-- Duplicate your items here for Day 3 (same as before) -->
-        </div><!-- End Schedule Day 3 -->
-
+    <!-- Schedule Day 1 -->
+      <div class="row schedule-item" v-for="schedule in schedules" :key="schedule.id">
+        <div class="col-md-2"><time>{{formatDateTime(schedule.time)}}</time></div>
+        <div class="col-md-10">
+          <h4>{{schedule.title}}</h4>
+          <p>{{schedule.details}}</p>
+        </div>
       </div>
     </div>
   </section>
+  <!-- Booking Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" >
+        <h2>
+          Booking
+        </h2>
+      </div><!-- End Section Title -->
+
+      <div class="container"  >
+        <div class="row gy-4 mt-1">
+          <div class="col-lg-12">
+            <form @submit.prevent="bookTicket" class="php-email-form">
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <label class="form-label">Your Name</label>
+                  <input 
+                    type="text" 
+                    v-model="bookingForm.customer_name" 
+                    class="form-control" 
+                    placeholder="Enter your full name"
+                    required
+                  >
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Email Address</label>
+                  <input 
+                    type="email" 
+                    v-model="bookingForm.customer_email" 
+                    class="form-control" 
+                    placeholder="your.email@example.com"
+                    required
+                  >
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Phone Number</label>
+                  <input 
+                    type="tel" 
+                    v-model="bookingForm.customer_phone" 
+                    class="form-control" 
+                    placeholder="Your contact number"
+                    required
+                  >
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Number of Tickets</label>
+                  <input 
+                    type="number" 
+                    v-model.number="bookingForm.quantity" 
+                    class="form-control" 
+                    min="1" 
+                    :max="eventData.available_tickets"
+                    required
+                  >
+                  <small class="text-muted">Available tickets: {{ eventData.available_tickets }}</small>
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label">Total Amount</label>
+                  <input 
+                    type="text" 
+                    :value="calculateTotal" 
+                    class="form-control" 
+                    readonly
+                  >
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div v-if="loading" class="loading">Processing booking...</div>
+                  <div v-if="error" class="error-message">{{ error }}</div>
+                  <div v-if="success" class="sent-message">{{ success }}</div>
+
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary" 
+                    :disabled="loading || !eventData.available_tickets"
+                  >
+                    Book Tickets
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+        </div>
+      </div>
+
+    </section><!-- /Contact Section -->
 </template>
 
 <script>
+import DataService from "../services/DataService";
+
 export default {
   name: "Event_Schedule",
+  data() {
+    return {
+      schedules: [],
+      eventData: [],
+      loading: false,
+      error: null,
+      success: null,
+      bookingForm: {
+        customer_name: '',
+        customer_email: '',
+        customer_phone: '',
+        quantity: 1,
+        event_id: null,
+        total_amount: 0,
+        status: 0,
+        booking_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      }
+    };
+  },
+  computed: {
+    calculateTotal() {
+      return this.bookingForm.quantity * (this.eventData.price || 0);
+    }
+  },
+  methods: {
+    fetchSchedules() {
+      const eventId = this.$route.params.id;
+      this.bookingForm.event_id = eventId; // Set the event_id for booking
+      DataService.SingleEvent(eventId)
+        .then((response) => {
+          this.eventData = response.data;
+          this.schedules = response.data.schedules || [];
+        })
+        .catch((error) => {
+          console.error("Error fetching schedules:", error);
+          this.error = "Error loading event data";
+        });
+    },
+    bookTicket() {
+      this.loading = true;
+      this.error = null;
+      this.success = null;
+
+      // Set the total amount based on quantity and event price
+      this.bookingForm.total_amount = this.calculateTotal;
+      
+      DataService.AddTicketBooking(this.bookingForm)
+        .then(response => {
+          console.log(response)
+          this.success = "Booking successful! Thank you for your purchase.";
+          this.bookingForm.quantity = 1; // Reset form
+          // Refresh event data to get updated available tickets
+          this.fetchSchedules();
+        })
+        .catch(error => {
+          console.error("Booking error:", error);
+          this.error = error.response?.data?.message || "Error processing your booking";
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    formatDateTime(dt) {
+      if (!dt) return "—";
+      const d = new Date(dt);
+      return d.toLocaleTimeString('en-US', { 
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true 
+      });
+    }
+  },
+  mounted() {
+    this.fetchSchedules();
+  }
 };
 </script>
 

@@ -20,9 +20,24 @@ const routes =  [
     component: () => import("./components/Dashboard")
   }, 
   {
-  path: "/event_schedule",
+  path: "/event_schedule/:id",
   name: "Event_Schedule",
   component: () => import("./components/Event_Schedule.vue"),
+},
+ {
+  path: '/event-schedules',
+  name: 'index_schedules',
+  component: () => import('./components/EventSchedule/EventScheduleIndex.vue')
+},
+{
+  path: '/event-schedules/create',
+  name: 'create_schedule',
+  component: () => import('./components/EventSchedule/EventScheduleCreate.vue')
+},
+{
+  path: '/event-schedules/edit/:id',
+  name: 'edit_schedule',
+  component: () => import('./components/EventSchedule/EventScheduleEdit.vue')
 },
  {
   path: '/speaker',

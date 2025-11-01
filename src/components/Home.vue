@@ -487,7 +487,7 @@
 
       <!-- Section Title -->
       <div class="container section-title" >
-        <h2>Hotels</h2>
+        <h2>Events</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -495,38 +495,19 @@
 
         <div class="row gy-4">
 
-          <div class="col-lg-4 col-md-6"  >
-            <div class="card h-100">
-              <div class="card-img">
-                <img src="assets/img/hotels-1.jpg" alt="" class="img-fluid">
+          <div class="col-lg-4 col-md-6" v-for="event in eventData" :key="event.id" >
+            <router-link :to="'event_schedule/'+event.id" >
+              <div class="card h-100">
+                <div class="card-img">
+                  <img :src="`${event.image}`" alt="" class="img-fluid">
+                </div>
+                <h3><a href="#" class="stretched-link">{{ event.title }}</a></h3>
+                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                <p>0.4 Mile from the Venue</p>
               </div>
-              <h3><a href="#" class="stretched-link">Non quibusdam blanditiis</a></h3>
-              <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-              <p>0.4 Mile from the Venue</p>
-            </div>
+            </router-link>
           </div><!-- End Card Item -->
 
-          <div class="col-lg-4 col-md-6"  >
-            <div class="card h-100">
-              <div class="card-img">
-                <img src="assets/img/hotels-2.jpg" alt="" class="img-fluid">
-              </div>
-              <h3><a href="#" class="stretched-link">Aspernatur assumenda</a></h3>
-              <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-              <p>0.5 Mile from the Venue</p>
-            </div>
-          </div><!-- End Card Item -->
-
-          <div class="col-lg-4 col-md-6"  >
-            <div class="card h-100">
-              <div class="card-img">
-                <img src="assets/img/hotels-3.jpg" alt="" class="img-fluid">
-              </div>
-              <h3><a href="#" class="stretched-link">Dolores ut ut voluptatibu</a></h3>
-              <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-              <p>0.6 Mile from the Venue</p>
-            </div>
-          </div><!-- End Card Item -->
 
         </div>
 
@@ -848,11 +829,30 @@
 </template>
 
 <script>
+import DataService from "../services/DataService";
+
 export default {
   name: 'Home',
-  props: {
-    msg: String
-  }
+  data() {
+    return {
+      eventData: [],
+    };
+  },
+  methods: {
+    getEvents() {
+      DataService.EventIndex()
+        .then((response) => {
+          if (response.data) this.eventData = response.data;
+          else alert(response.data.error || "Failed to load venues.");
+        })
+        .catch((e) => {
+          console.log("Error fetching venues:", e);
+        });
+    }
+  },
+  mounted() {
+    this.getEvents();
+  },
 }
 </script>
 

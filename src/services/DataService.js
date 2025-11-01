@@ -65,6 +65,28 @@ class DataService {
   DeleteWishlist(id) {
     return http.delete(`/wishlist/${id}`);
   }
+  // Event Schedule CRUD
+  ScheduleIndex(params = null) {
+    // params can include { event_id }
+    const query = params ? { params } : {};
+    return http.get(`/event-schedules`, query);
+  }
+
+  SingleSchedule(id) {
+    return http.get(`/event-schedules/${id}`);
+  }
+
+  AddSchedule(data) {
+    return http.post(`/event-schedules`, data);
+  }
+
+  UpdateSchedule(id, data) {
+    return http.post(`/event-schedules/${id}`, data);
+  }
+
+  DeleteSchedule(id) {
+    return http.delete(`/event-schedules/${id}`);
+  }
    TicketBookingIndex() {
     return http.get("/ticket-booking");
   }
@@ -78,7 +100,7 @@ class DataService {
   }
 
   UpdateTicketBooking(id, data) {
-    return http.put(`/ticket-booking/${id}`, data);
+    return http.post(`/ticket-booking/${id}`, data);
   }
 
   DeleteTicketBooking(id) {
