@@ -13,7 +13,7 @@
               <th>Customer Name</th>
               <th>Customer Email</th>
               <th>Customer Phone</th>
-              <th>Event ID</th>
+              <th>Event</th>
               <th>Quantity</th>
               <th>Total Amount</th>
               <th>Status</th>
@@ -45,8 +45,14 @@
                 >
                   Edit
                 </router-link>
+                <router-link
+                  :to="'/invoice/' + ticket.id"
+                  class="btn btn-sm btn-info me-2"
+                >
+                  Invoice
+                </router-link>
                 <button
-                  @click="deleteTicket(ticket.id)"
+                  @click="deleteTicketBooking(ticket.id)"
                   class="btn btn-sm btn-danger"
                 >
                   Delete
@@ -55,6 +61,17 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- Optional: Simple list view for invoice links -->
+        <div class="mt-4">
+          <h5>Quick Invoice Links:</h5>
+          <ul>
+            <li v-for="ticket in ticketData" :key="'invoice-' + ticket.id">
+              {{ ticket.event.title }} - {{ ticket.customer_name }}
+              <router-link :to="`/invoice/${ticket.id}`">View Invoice</router-link>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -72,6 +89,7 @@ export default {
   },
   methods: {
     getData() {
+      // Fetch tickets via DataService
       DataService.TicketBookingIndex()
         .then((response) => {
           this.ticketData = response.data;
