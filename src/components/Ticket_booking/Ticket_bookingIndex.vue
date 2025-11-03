@@ -68,7 +68,8 @@
           <ul>
             <li v-for="ticket in ticketData" :key="'invoice-' + ticket.id">
               {{ ticket.event.title }} - {{ ticket.customer_name }}
-              <router-link :to="`/invoice/${ticket.id}`">View Invoice</router-link>
+              <router-link :to="`/ticket/${booking.id}`">View Ticket</router-link>
+
             </li>
           </ul>
         </div>
