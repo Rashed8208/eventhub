@@ -101,7 +101,7 @@ class DataService {
   }
 
   UpdateTicketBooking(id, data) {
-    return http.post(`/ticket-booking/${id}`, data);
+    return http.put(`/ticket-booking/${id}`, data);
   }
 
   DeleteTicketBooking(id) {

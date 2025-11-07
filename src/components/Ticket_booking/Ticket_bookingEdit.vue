@@ -4,10 +4,21 @@
 
     <form @submit.prevent="updateTicketBooking">
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <label>User ID</label>
-          <input v-model="form.user_id" type="number" class="form-control" />
-        </div>
+       <div class="col-md-6 mb-3">
+            <label>Customer Name</label>
+            <input v-model="form.customer_name" type="text" class="form-control" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label>Customer Email</label>
+            <input v-model="form.customer_email" type="email" class="form-control" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label>Customer Phone</label>
+            <input v-model="form.customer_phone" type="text" class="form-control" />
+          </div>
+
 
         <div class="col-md-6 mb-3">
           <label>Event ID</label>
@@ -50,18 +61,21 @@ import DataService from "../../services/DataService";
 export default {
   name: "Ticket_bookingEdit",
   data() {
-    return {
-      form: {
-        user_id: '',
-        event_id: '',
-        quantity: '',
-        total_amount: '',
-        status: 0,
-        booking_date: ''
-      },
-      loading: false
-    };
-  },
+  return {
+    form: {
+      customer_name: '',
+      customer_email: '',
+      customer_phone: '',
+      event_id: '',
+      quantity: '',
+      total_amount: '',
+      status: 0,
+      booking_date: ''
+    }, // <-- comma was missing here
+    loading: false
+  };
+},
+
   methods: {
     async getTicketBooking(id) {
       try {

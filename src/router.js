@@ -25,9 +25,9 @@ const routes =  [
   component: () => import("./components/Event_Schedule.vue"),
 },
 {
-  path: "/invoice/:id",
-  name: "invoice",
-  component: () => import("./components/Ticket_booking/Invoice.vue"),
+  path: "/ticket/:id",
+  name: "ticket",
+  component: () => import("./components/Ticket_booking/Ticket.vue"),
 },
  {
   path: '/event-schedules',

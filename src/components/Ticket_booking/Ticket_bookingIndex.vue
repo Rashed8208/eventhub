@@ -27,7 +27,7 @@
               <td>{{ ticket.customer_name }}</td>
               <td>{{ ticket.customer_email }}</td>
               <td>{{ ticket.customer_phone }}</td>
-              <td>{{ ticket.event.title }}</td>
+              <td>{{ ticket.event?.title || 'N/A' }}</td>
               <td>{{ ticket.quantity }}</td>
               <td>{{ ticket.total_amount }}</td>
               <td>
@@ -39,22 +39,13 @@
               </td>
               <td>{{ ticket.booking_date }}</td>
               <td>
-                <router-link
-                  :to="'/edit_ticket_booking/' + ticket.id"
-                  class="btn btn-sm btn-primary me-2"
-                >
+                <router-link :to="`/edit_ticket_booking/${ticket.id}`" class="btn btn-sm btn-primary me-2">
                   Edit
                 </router-link>
-                <router-link
-                  :to="'/invoice/' + ticket.id"
-                  class="btn btn-sm btn-info me-2"
-                >
-                  Invoice
+                <router-link :to="`/ticket/${ticket.id}`" class="btn btn-sm btn-info me-2">
+                  Ticket
                 </router-link>
-                <button
-                  @click="deleteTicketBooking(ticket.id)"
-                  class="btn btn-sm btn-danger"
-                >
+                <button @click="deleteTicketBooking(ticket.id)" class="btn btn-sm btn-danger">
                   Delete
                 </button>
               </td>
@@ -63,13 +54,12 @@
         </table>
 
         <!-- Optional: Simple list view for invoice links -->
-        <div class="mt-4">
+        <div class="mt-4" v-if="ticketData.length">
           <h5>Quick Invoice Links:</h5>
           <ul>
             <li v-for="ticket in ticketData" :key="'invoice-' + ticket.id">
-              {{ ticket.event.title }} - {{ ticket.customer_name }}
-              <router-link :to="`/ticket/${booking.id}`">View Ticket</router-link>
-
+              {{ ticket.event?.title || 'N/A' }} - {{ ticket.customer_name }}
+              <router-link :to="`/ticket/${ticket.id}`">View Ticket</router-link>
             </li>
           </ul>
         </div>
@@ -90,10 +80,9 @@ export default {
   },
   methods: {
     getData() {
-      // Fetch tickets via DataService
       DataService.TicketBookingIndex()
         .then((response) => {
-          this.ticketData = response.data;
+          this.ticketData = response.data || [];
         })
         .catch((e) => console.log("Error fetching tickets:", e));
     },
