@@ -4,37 +4,6 @@
 
     <form @submit.prevent="updateTicketBooking">
       <div class="row">
-       <div class="col-md-6 mb-3">
-            <label>Customer Name</label>
-            <input v-model="form.customer_name" type="text" class="form-control" />
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label>Customer Email</label>
-            <input v-model="form.customer_email" type="email" class="form-control" />
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label>Customer Phone</label>
-            <input v-model="form.customer_phone" type="text" class="form-control" />
-          </div>
-
-
-        <div class="col-md-6 mb-3">
-          <label>Event ID</label>
-          <input v-model="form.event_id" type="number" class="form-control" />
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label>Quantity</label>
-          <input v-model="form.quantity" type="number" class="form-control" />
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label>Total Amount</label>
-          <input v-model="form.total_amount" type="number" step="0.01" class="form-control" />
-        </div>
-
         <div class="col-md-6 mb-3">
           <label>Status</label>
           <select v-model="form.status" class="form-control">
@@ -63,12 +32,6 @@ export default {
   data() {
   return {
     form: {
-      customer_name: '',
-      customer_email: '',
-      customer_phone: '',
-      event_id: '',
-      quantity: '',
-      total_amount: '',
       status: 0,
       booking_date: ''
     }, // <-- comma was missing here
@@ -93,7 +56,8 @@ export default {
       const id = this.$route.params.id;
       try {
         this.loading = true;
-        await DataService.UpdateTicketBooking(id, this.form);
+        let formData = { ...this.form,'_method': 'PUT' };
+        await DataService.UpdateTicketBooking(id, formData);
         alert("Ticket updated successfully!");
         this.$router.push({ name: "index_ticket_booking" });
       } catch (error) {
