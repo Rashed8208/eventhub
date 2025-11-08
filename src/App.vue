@@ -1,80 +1,82 @@
 <template>
-  <!-- Header for normal users -->
-  <header
-    v-if="!uid && !hiddenRoutes.includes(currentRouteName)"
-    id="header"
-    class="header d-flex align-items-center fixed-top custom-header"
-  >
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="/" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/logo.png" alt="">
-      </a>
+  <div id="app">
+    <!-- Header for normal users -->
+    <header v-if="!uid && !hiddenRoutes.includes(currentRouteName)" class="header">
+      <div class="container">
+        <div class="header-content">
+          <router-link to="/" class="logo">
+            <img src="assets/img/logo.png" alt="Logo">
+          </router-link>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/speaker">Speaker</router-link></li>
-          <li><router-link to="/event_schedule">Event Schedule</router-link></li>
-          <li><router-link to="/venue">Venue</router-link></li>
-          <li><a href="#hotels">Hotels</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+          <nav class="nav-menu">
+            <router-link to="/">Home</router-link>
+            <router-link to="/speaker">Speaker</router-link>
+            <router-link to="/event_schedule">Schedule</router-link>
+            <router-link to="/venue">Venue</router-link>
+            <router-link to="/hotel">Hotel</router-link>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+          </nav>
 
-      <a class="cta-btn d-none d-sm-block" href="#buy-tickets">Buy Tickets</a>
-    </div>
-  </header>
-
-  <!-- Admin Navbar -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" v-if="uid">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Admin</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/index_event" class="nav-link active">Event</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/event-schedules" class="nav-link active">Event Schedule</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/index_venue" class="nav-link active">Venue</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/index_ticket_booking" class="nav-link active">Ticket Booking</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/index_wishlist" class="nav-link active">Wishlist</router-link>
-          </li>
-        </ul>
+          <a href="#buy-tickets" class="buy-tickets-btn">Buy Tickets</a>
+        </div>
       </div>
-    </div>
-  </nav>
+    </header>
 
-  <!-- Main Content -->
-  <router-view />
+    <!-- Admin Navbar -->
+    <nav v-if="uid" class="admin-nav">
+      <div class="container">
+        <div class="admin-nav-content">
+          <router-link to="/dashboard" class="admin-logo">Admin Panel</router-link>
+          
+          <div class="admin-links">
+            <router-link to="/index_event">Events</router-link>
+            <router-link to="/event-schedules">Schedules</router-link>
+            <router-link to="/index_venue">Venues</router-link>
+            <router-link to="/index_ticket_booking">Bookings</router-link>
+            <router-link to="/index_wishlist">Wishlist</router-link>
+          </div>
 
-  <!-- Footer (hidden on dashboard and login) -->
-  <footer v-if="!hiddenRoutes.includes(currentRouteName)" id="footer" class="footer dark-background">
-    <!-- Existing footer content here -->
-  </footer>
+          <button @click="logout" class="logout-btn">Logout</button>
+        </div>
+      </div>
+    </nav>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-  </a>
+    <!-- Main Content -->
+    <main :class="{ 'with-header': !uid && !hiddenRoutes.includes(currentRouteName), 'with-admin-nav': uid }">
+      <router-view />
+    </main>
+
+    <!-- Footer -->
+    <footer v-if="!hiddenRoutes.includes(currentRouteName)" class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>EventHub</h3>
+            <p>Creating memorable experiences through exceptional events.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><router-link to="/">Home</router-link></li>
+              <li><router-link to="/speaker">Speakers</router-link></li>
+              <li><router-link to="/event_schedule">Schedule</router-link></li>
+              <li><router-link to="/venue">Venue</router-link></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact</h4>
+            <p>123 Event Street, City</p>
+            <p>+1 234 567 8900</p>
+            <p>info@eventhub.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EventHub. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -90,11 +92,7 @@ export default {
   },
   setup() {
     const route = useRoute()
-
-    // Array of route names where header/footer should be hidden
     const hiddenRoutes = ['dashboard', 'login']
-
-    // Get current route name
     const currentRouteName = computed(() => route.name)
 
     return { currentRouteName, hiddenRoutes }
@@ -103,27 +101,230 @@ export default {
     logout() {
       this.uid = ""
       sessionStorage.setItem('uid', '')
-      window.location.href = '/'
+      this.$router.push('/')
     }
   }
 }
 </script>
 
-<style scoped>
-.custom-header {
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
   background-color: #1a1a1a;
-  color: white;
-  transition: background-color 0.3s ease;
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 80px;
 }
 
-.custom-header a {
-  color: white;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
-.custom-header a:hover {
+.logo img {
+  height: 40px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-menu a,
+.nav-menu router-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover,
+.nav-menu router-link:hover {
   color: #ffcc00;
 }
+
+.buy-tickets-btn {
+  background-color: #ffcc00;
+  color: #1a1a1a;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.buy-tickets-btn:hover {
+  background-color: #ffb700;
+}
+
+/* Admin Navbar */
+.admin-nav {
+  background-color: #4e73df;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  height: 60px;
+}
+
+.admin-nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.admin-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.admin-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.admin-links a,
+.admin-links router-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.admin-links a:hover,
+.admin-links router-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Content */
+main {
+  min-height: calc(100vh - 60px);
+}
+
+main.with-header {
+  padding-top: 80px;
+}
+
+main.with-admin-nav {
+  padding-top: 60px;
+}
+
+/* Footer */
+.footer {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 3rem 0 1rem;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: #ffcc00;
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: #ffcc00;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .admin-nav-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .admin-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  main.with-header {
+    padding-top: 120px;
+  }
+  
+  main.with-admin-nav {
+    padding-top: 100px;
+  }
+}
 </style>
-
-
-

@@ -52,9 +52,16 @@ const routes =  [
 } ,
  {
   path: '/venue',
+  alias: '/venue',
   name: 'venue',
   component: () => import('./components/Venue.vue')
 } ,
+// {
+//   path:'/hotel',
+//  alias: '/hotel',
+//   name: 'hotel',
+//   component: () => import('./components/Hotel.vue')
+//  } ,
   {
   path: '/index_event',
   name: 'index_event',
